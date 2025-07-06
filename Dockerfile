@@ -11,6 +11,6 @@ FROM openjdk:21-slim
 
 EXPOSE 8080
 
-COPY --from=build /target/pikababy_back-1.0.0.jar app.jar
+COPY --from=build /target/pikababy_back.jar app.jar
 
 ENTRYPOINT [ "java", "-jar", "app.jar" ]

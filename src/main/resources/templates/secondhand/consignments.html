@@ -592,7 +592,9 @@
         });
         
         function editReceived(id, received){
-        	let url = "http://localhost:8080/secondhand/consign/received/" + id;
+        	// let url = "http://localhost:8080/secondhand/consign/received/" + id;
+        	let url = "http://52.41.36.82:8080/secondhand/consign/received/" + id;
+        	
         	$.ajax({
         		method: "POST",
         		url: url,

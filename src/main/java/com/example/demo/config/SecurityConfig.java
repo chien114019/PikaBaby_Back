@@ -72,7 +72,7 @@ public class SecurityConfig {
             
             .formLogin(login -> login
                 .loginPage("/login") // 自訂登入畫面
-                .defaultSuccessUrl("/", true) // 登入成功導向index
+                .defaultSuccessUrl("/index", true) // 登入成功導向index
                 .permitAll()
             )
             .logout(logout -> logout

@@ -295,52 +295,52 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script>
 	/* Sidebar響應式功能 */
-		 const toggleBtn = document.getElementById("toggleSidebarBtn");
-		  const sidebar = document.querySelector(".sidebar");
-		  const overlay = document.getElementById("sidebarOverlay");
-
-		  toggleBtn.addEventListener("click", () => {
-		    sidebar.classList.toggle("show");
-		    overlay.classList.toggle("show");
-		    toggleBtn.classList.toggle("open");
-		  });
-
-		  overlay.addEventListener("click", () => {
-		    sidebar.classList.remove("show");
-		    overlay.classList.remove("show");
-		    toggleBtn.classList.remove("open");
-		  });
-		  /* 依照日期排序功能 */
-		  let asc = false; // 初始為新→舊
-
-		  document.getElementById('dateHeader').addEventListener('click', function () {
-		      const table = document.getElementById('purchaseTable');
-		      const tbody = table.tBodies[0];
-		      const rows = Array.from(tbody.querySelectorAll('tr'));
-
-		      // 找到日期欄的索引（避免順序變動）
-		      const ths = Array.from(table.tHead.rows[0].cells);
-		      let dateCol = ths.findIndex(th => th.id === 'dateHeader');
-
-		      // 排序
-		      rows.sort((a, b) => {
-		          // 取出日期字串，假設格式 "yyyy-MM-dd"
-		          let aDate = a.cells[dateCol].textContent.trim();
-		          let bDate = b.cells[dateCol].textContent.trim();
-		          // 轉成 timestamp
-		          let aTime = new Date(aDate).getTime();
-		          let bTime = new Date(bDate).getTime();
-		          return asc ? aTime - bTime : bTime - aTime;
-		      });
-
-		      // 清空再 append 排序好的 row
-		      rows.forEach(row => tbody.appendChild(row));
-
-		      // 切換排序狀態
-		      asc = !asc;
-		      document.getElementById('dateSortIcon').textContent = asc ? '▲' : '▼';
-		  });
-</script>
+		const toggleBtn = document.getElementById("toggleSidebarBtn");
+		const sidebar = document.querySelector(".sidebar");
+		const overlay = document.getElementById("sidebarOverlay");
+		
+		toggleBtn.addEventListener("click", () => {
+		  sidebar.classList.toggle("show");
+		  overlay.classList.toggle("show");
+		  toggleBtn.classList.toggle("open");
+		});
+		
+		overlay.addEventListener("click", () => {
+		  sidebar.classList.remove("show");
+		  overlay.classList.remove("show");
+		  toggleBtn.classList.remove("open");
+		});
+		/* 依照日期排序功能 */
+		let asc = false; // 初始為新→舊
+		
+		document.getElementById('dateHeader').addEventListener('click', function () {
+		    const table = document.getElementById('purchaseTable');
+		    const tbody = table.tBodies[0];
+		    const rows = Array.from(tbody.querySelectorAll('tr'));
+		
+		    // 找到日期欄的索引（避免順序變動）
+		    const ths = Array.from(table.tHead.rows[0].cells);
+		    let dateCol = ths.findIndex(th => th.id === 'dateHeader');
+		
+		    // 排序
+		    rows.sort((a, b) => {
+		        // 取出日期字串，假設格式 "yyyy-MM-dd"
+		        let aDate = a.cells[dateCol].textContent.trim();
+		        let bDate = b.cells[dateCol].textContent.trim();
+		        // 轉成 timestamp
+		        let aTime = new Date(aDate).getTime();
+		        let bTime = new Date(bDate).getTime();
+		        return asc ? aTime - bTime : bTime - aTime;
+		    });
+		
+		    // 清空再 append 排序好的 row
+		    rows.forEach(row => tbody.appendChild(row));
+		
+		    // 切換排序狀態
+		    asc = !asc;
+		    document.getElementById('dateSortIcon').textContent = asc ? '▲' : '▼';
+		});
+	</script>
 </body>
 
 </html>

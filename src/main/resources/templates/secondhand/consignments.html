@@ -452,13 +452,9 @@
 		src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 	<script>
-/*        $("#saveBtn").on("click", function (e) {
-            alert("資料儲存完畢");
-        })
-*/        
         function getRecord(id) {
         	console.log(id);
-        	let url = "http://localhost:8080/secondhand/consign/" + id;
+        	let url = "/secondhand/consign/" + id;
         	$.ajax({
         		method: "GET",
         		url: url,
@@ -549,7 +545,7 @@
         }
         
         function saveConsignment(id) {
-        	let url = "http://localhost:8080/secondhand/consign/edit/" + id;
+        	let url = "/secondhand/consign/edit/" + id;
         	// 傳出 id, review, price
         	$.ajax({
         		method: "POST",
@@ -592,8 +588,7 @@
         });
         
         function editReceived(id, received){
-        	// let url = "http://localhost:8080/secondhand/consign/received/" + id;
-        	let url = "https://pikababy-back.onrender.com/secondhand/consign/received/" + id;
+        	let url = "/secondhand/consign/received/" + id;
         	
         	$.ajax({
         		method: "POST",

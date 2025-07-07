@@ -481,7 +481,7 @@
         
         function getWithdraw(id) {
         	console.log(id);
-        	let url = "http://localhost:8080/secondhand/withdraw/" + id
+        	let url = "/secondhand/withdraw/" + id
         	$.ajax({
         		method: "GET",
         		url: url,
@@ -506,7 +506,7 @@
         
         function saveWithdraw(id) {
         	console.log(id);
-        	let url = "http://localhost:8080/secondhand/withdraw/edit/" + id;
+        	let url = "/secondhand/withdraw/edit/" + id;
         	$.ajax({
         		method: "POST",
         		url: url,
@@ -541,7 +541,7 @@
             const errorList = [];
             const requests = []
             idList.forEach(function(id) {
-                let url = "http://localhost:8080/secondhand/withdraw/edit/" + id;
+                let url = "/secondhand/withdraw/edit/" + id;
                 let request = $.ajax({
                     method: "POST",
                     url: url,

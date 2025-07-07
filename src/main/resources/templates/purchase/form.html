@@ -365,97 +365,97 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 	<script>
-	document.addEventListener('change', function (e) {
-		  if (e.target.name === 'supplierProductIds') {
-		    const selectedOption = e.target.selectedOptions[0];
-		    const price = selectedOption.getAttribute('data-price');
-		    const unitPriceInput = e.target.closest('tr').querySelector('input[name="unitPrice"]');
-		    if (price) {
-		      unitPriceInput.value = price;
-		    }
-		  }
-		});
+		document.addEventListener('change', function (e) {
+			  if (e.target.name === 'supplierProductIds') {
+			    const selectedOption = e.target.selectedOptions[0];
+			    const price = selectedOption.getAttribute('data-price');
+			    const unitPriceInput = e.target.closest('tr').querySelector('input[name="unitPrice"]');
+			    if (price) {
+			      unitPriceInput.value = price;
+			    }
+			  }
+			});
+		
 	
-
-	function updateDetails(selectElement) {
-	  const selected = selectElement.selectedOptions[0];
-	  const row = selectElement.closest('tr');
-
-	  const spec = selected.getAttribute('data-spec');
-	  const price = selected.getAttribute('data-price');
-
-	  row.querySelector('input[name="spec"]').value = spec || '';
-	  row.querySelector('input[name="unitPrice"]').value = price || '';
-	}
-
-    function addRow() {
-      const row = document.querySelector('#detailRows tr');
-      const newRow = row.cloneNode(true);
-      newRow.querySelectorAll('input').forEach(input => input.value = '');
-      document.getElementById('detailRows').appendChild(newRow);
-    }
-
-    function removeRow(button) {
-      const rows = document.querySelectorAll('#detailRows tr');
-      if (rows.length > 1) {
-        button.closest('tr').remove();
-      }
-    }
-    
-    /* 序號自行排序 */
-    function addRow() {
-    const row = document.querySelector('#detailRows tr');
-    const newRow = row.cloneNode(true);
-    newRow.querySelectorAll('input').forEach(input => input.value = '');
-    document.getElementById('detailRows').appendChild(newRow);
-    updateIndex();
-  }
-
-  function removeRow(button) {
-    const rows = document.querySelectorAll('#detailRows tr');
-    if (rows.length > 1) {
-      button.closest('tr').remove();
-      updateIndex();
-    }
-  }
-
-  function updateIndex() {
-    const rows = document.querySelectorAll('#detailRows tr');
-    rows.forEach((row, index) => {
-      row.querySelector('td:first-child').textContent = index + 1;
-    });
-  }
-
-  // 初始頁面載入時也更新一次
-  window.addEventListener('DOMContentLoaded', () => {
-    updateIndex();
-
-    // 載入畫面時，針對所有已有選擇的 supplierProduct 自動填值
-    const selects = document.querySelectorAll('select[name="supplierProductIds"]');
-    selects.forEach(select => {
-      if (select.value) {
-        updateDetails(select);
-      }
-    });
-  });
+		function updateDetails(selectElement) {
+		  const selected = selectElement.selectedOptions[0];
+		  const row = selectElement.closest('tr');
+	
+		  const spec = selected.getAttribute('data-spec');
+		  const price = selected.getAttribute('data-price');
+	
+		  row.querySelector('input[name="spec"]').value = spec || '';
+		  row.querySelector('input[name="unitPrice"]').value = price || '';
+		}
+	
+	    function addRow() {
+	      const row = document.querySelector('#detailRows tr');
+	      const newRow = row.cloneNode(true);
+	      newRow.querySelectorAll('input').forEach(input => input.value = '');
+	      document.getElementById('detailRows').appendChild(newRow);
+	    }
+	
+	    function removeRow(button) {
+	      const rows = document.querySelectorAll('#detailRows tr');
+	      if (rows.length > 1) {
+	        button.closest('tr').remove();
+	      }
+	    }
+	    
+	    /* 序號自行排序 */
+	    function addRow() {
+		    const row = document.querySelector('#detailRows tr');
+		    const newRow = row.cloneNode(true);
+		    newRow.querySelectorAll('input').forEach(input => input.value = '');
+		    document.getElementById('detailRows').appendChild(newRow);
+		    updateIndex();
+	 	}
+	
+		function removeRow(button) {
+		  const rows = document.querySelectorAll('#detailRows tr');
+		  if (rows.length > 1) {
+		    button.closest('tr').remove();
+		    updateIndex();
+		  }
+		}
+		
+		function updateIndex() {
+		  const rows = document.querySelectorAll('#detailRows tr');
+		  rows.forEach((row, index) => {
+		    row.querySelector('td:first-child').textContent = index + 1;
+		  });
+		}
+		
+		// 初始頁面載入時也更新一次
+		window.addEventListener('DOMContentLoaded', () => {
+		  updateIndex();
+		
+		  // 載入畫面時，針對所有已有選擇的 supplierProduct 自動填值
+		  const selects = document.querySelectorAll('select[name="supplierProductIds"]');
+		  selects.forEach(select => {
+		    if (select.value) {
+		      updateDetails(select);
+		    }
+		  });
+		});
   
   /* Sidebar響應式功能 */
-	 const toggleBtn = document.getElementById("toggleSidebarBtn");
-	  const sidebar = document.querySelector(".sidebar");
-	  const overlay = document.getElementById("sidebarOverlay");
-
-	  toggleBtn.addEventListener("click", () => {
-	    sidebar.classList.toggle("show");
-	    overlay.classList.toggle("show");
-	    toggleBtn.classList.toggle("open");
-	  });
-
-	  overlay.addEventListener("click", () => {
-	    sidebar.classList.remove("show");
-	    overlay.classList.remove("show");
-	    toggleBtn.classList.remove("open");
-	  });
-  </script>
+		const toggleBtn = document.getElementById("toggleSidebarBtn");
+		const sidebar = document.querySelector(".sidebar");
+		const overlay = document.getElementById("sidebarOverlay");
+		
+		toggleBtn.addEventListener("click", () => {
+		  sidebar.classList.toggle("show");
+		  overlay.classList.toggle("show");
+		  toggleBtn.classList.toggle("open");
+		});
+		
+		overlay.addEventListener("click", () => {
+		  sidebar.classList.remove("show");
+		  overlay.classList.remove("show");
+		  toggleBtn.classList.remove("open");
+		});
+	</script>
 </body>
 
 </html>

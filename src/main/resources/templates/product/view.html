@@ -304,22 +304,22 @@
 		<!-- 響應式跳出選單 -->
 	<script>
 	/* Sidebar響應式功能 */
-		 const toggleBtn = document.getElementById("toggleSidebarBtn");
-		  const sidebar = document.querySelector(".sidebar");
-		  const overlay = document.getElementById("sidebarOverlay");
-
-		  toggleBtn.addEventListener("click", () => {
-		    sidebar.classList.toggle("show");
-		    overlay.classList.toggle("show");
-		    toggleBtn.classList.toggle("open");
-		  });
-
-		  overlay.addEventListener("click", () => {
-		    sidebar.classList.remove("show");
-		    overlay.classList.remove("show");
-		    toggleBtn.classList.remove("open");
-		  });
-</script>
+		const toggleBtn = document.getElementById("toggleSidebarBtn");
+		const sidebar = document.querySelector(".sidebar");
+		const overlay = document.getElementById("sidebarOverlay");
+		
+		toggleBtn.addEventListener("click", () => {
+		  sidebar.classList.toggle("show");
+		  overlay.classList.toggle("show");
+		  toggleBtn.classList.toggle("open");
+		});
+		
+		overlay.addEventListener("click", () => {
+		  sidebar.classList.remove("show");
+		  overlay.classList.remove("show");
+		  toggleBtn.classList.remove("open");
+		});
+	</script>
 
 </body>
 

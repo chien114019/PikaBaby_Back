@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -153,20 +154,36 @@ public class ProductService {
         Product savedProduct = repository.save(product);
 
         List<ProductImage> imageList = new ArrayList<>();
-
-        if (imageFiles != null) {
-            for (MultipartFile file : imageFiles) {
-                if (!file.isEmpty()) {
-                    ProductImage img = new ProductImage();
-                    img.setProduct(savedProduct);
-                    img.setImagePath(file.getOriginalFilename());
-                    img.setImageData(file.getBytes());
-                    imageList.add(img);
-                }
-            }
-        }
-
-        imageRepository.saveAll(imageList);
+        
+        try {
+        	String productUrl = System.getProperty("user.dir") + "/products";
+        	File uploadDir = new File(productUrl);
+        	if (!uploadDir.exists()) {
+        		uploadDir.mkdirs();
+        	}
+        	
+        	Integer newId = savedProduct.getId();
+        
+        	if (imageFiles != null) {
+        		for (MultipartFile file : imageFiles) {
+        			if (!file.isEmpty()) {
+        				ProductImage img = new ProductImage();
+        				img.setProduct(savedProduct);
+//                    img.setImagePath(file.getOriginalFilename());
+        				String imgName = "/p" + newId + "_" +  file.getOriginalFilename();
+        				img.setImagePath(imgName);
+//                    img.setImageData(file.getBytes());
+        				String uploadUrl = productUrl + imgName;
+        				file.transferTo(new File(uploadUrl));
+        				imageList.add(img);
+        			}
+        		}
+        	}
+        	
+        	imageRepository.saveAll(imageList);			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
     }
     
     public List<Product> findPublishedProducts() {

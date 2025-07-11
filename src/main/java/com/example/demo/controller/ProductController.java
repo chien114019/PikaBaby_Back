@@ -1,6 +1,32 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.ProductDto;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.example.demo.model.Product;
 import com.example.demo.model.ProductImage;
 import com.example.demo.model.ProductType;
@@ -11,30 +37,6 @@ import com.example.demo.repository.PurchaseOrderDetailRepository;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.SupplierProductService;
 import com.example.demo.service.SupplierService;
-
-import java.io.IOException;
-import java.math.BigDecimal;
-import java.net.URLConnection;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @CrossOrigin(origins = {"http://localhost:5500","http://127.0.0.1:5500","http://localhost:5501", "http://127.0.0.1:5501", "http://localhost:5503", "http://127.0.0.1:5503"}, allowCredentials = "true")
@@ -89,33 +91,7 @@ public class ProductController {
         model.addAttribute("allAgeRanges", List.of("嬰幼兒（0-3M）", "幼童（3-6M）", "兒童（6-12M）", "青少年（2-3y以上）"));
         return "product/form";
     }
-
-    //原本
-//    @PostMapping("/save")
-//    public String save(@ModelAttribute Product product,
-//                       @RequestParam("image") MultipartFile imageFile) throws IOException {
-//
-//        if (imageFile != null && !imageFile.isEmpty()) {
-//            String fileName = UUID.randomUUID() + "_" + imageFile.getOriginalFilename();
-//            Path uploadPath = Paths.get("src/main/resources/static/uploads/");
-//            
-//            // 建立資料夾（如果不存在）
-//            if (!Files.exists(uploadPath)) {
-//                Files.createDirectories(uploadPath);
-//            }
-//
-//            // 儲存圖片
-//            Path filePath = uploadPath.resolve(fileName);
-//            Files.copy(imageFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
-//
-//            // 儲存圖片路徑到產品
-//            product.setImageUrl("/static/" + fileName);
-//        }
-//
-//        service.save(product);
-//        return "redirect:/products";
-//    }
-    
+  
     //0621更改存多圖片
     @PostMapping("/save")
     public String save(@ModelAttribute Product product, @RequestParam("type") Integer type, 
@@ -264,16 +240,29 @@ public class ProductController {
     @GetMapping("/front/images/{id}")
     @ResponseBody
     public ResponseEntity<byte[]> serveImage(@PathVariable Integer id) {
-        ProductImage image = imageRepository.findById(id).orElse(null);
-        if (image == null || image.getImageData() == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        String contentType = URLConnection.guessContentTypeFromName(image.getImagePath());
+    	ProductImage image = imageRepository.findById(id).orElse(null);
+    	String contentType = URLConnection.guessContentTypeFromName(image.getImagePath());
+    	byte[] imgData = new byte[] {};
+    	
+    	try {
+        	if (image == null || image.getImagePath() == null) {
+        		return ResponseEntity.notFound().build();
+        	}        	
+        	imgData = readImg(image.getImagePath());
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
         return ResponseEntity.ok()
             .header("Content-Type", contentType != null ? contentType : "application/octet-stream")
-            .body(image.getImageData());
+            .body(imgData);
     }
+    
+    private byte[] readImg(String imgName) throws Exception {
+		String productDir = System.getProperty("user.dir") + "/products";
+		FileInputStream fin = new FileInputStream(new File(productDir + imgName));
+		return fin.readAllBytes();
+	}
     
     @DeleteMapping("/front/images/{id}")
     @ResponseBody
@@ -286,7 +275,7 @@ public class ProductController {
         imageRepository.deleteById(id);
         return ResponseEntity.ok("deleted");
     }
-    
+        
     // 測試端點 - 檢查商品狀態
     @GetMapping("/front/test")
     @ResponseBody

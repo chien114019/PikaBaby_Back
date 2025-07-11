@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -225,9 +227,34 @@ public class ConsignmentService {
 				newConsign.setApplyDate(new Date());
 				newConsign.setReview(0);
 
-				newConsign.setPic1(files[0].getBytes());
-				newConsign.setPic2(files[1].getBytes());
-				newConsign.setPic3(files[2].getBytes());
+//				newConsign.setPic1(files[0].getBytes());
+//				newConsign.setPic2(files[1].getBytes());
+//				newConsign.setPic3(files[2].getBytes());
+
+				for (MultipartFile item : files) {
+					if (item.isEmpty()) {
+						throw new Exception("檔案不存在");
+					}
+				}
+
+				Integer newId = repository.save(newConsign).getId();
+
+				String saveDir = System.getProperty("user.dir") + "/uploads";
+				File dir = new File(saveDir);
+				if (!dir.exists()) {
+					dir.mkdirs();
+				}
+
+				List<String> imgNames = new ArrayList<String>();
+				for (MultipartFile item : files) {
+					String imgName = "/c" + newId + "_" + item.getOriginalFilename();
+					String uploadUrl = saveDir + imgName;
+					item.transferTo(new File(uploadUrl));
+					imgNames.add(imgName);
+				}
+				newConsign.setImg1(imgNames.get(0));
+				newConsign.setImg2(imgNames.get(1));
+				newConsign.setImg3(imgNames.get(2));
 
 				repository.save(newConsign);
 
@@ -283,7 +310,8 @@ public class ConsignmentService {
 
 		if (pType != null && delivery != null) {
 			if (Integer.parseInt(delivery) > 0) {
-				consigments = repository.findAllByProductTypeAndDeliveryAndReceivedIsFalse(pType, Integer.parseInt(delivery));
+				consigments = repository.findAllByProductTypeAndDeliveryAndReceivedIsFalse(pType,
+						Integer.parseInt(delivery));
 			} else {
 				consigments = repository.findAllByProductTypeAndReceivedIsTrue(pType);
 			}

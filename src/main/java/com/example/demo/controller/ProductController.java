@@ -147,24 +147,29 @@ public class ProductController {
         Map<Integer, Integer> stockMap = new HashMap<>();
         Map<Integer, String> imageMap = new HashMap<>(); 
 
-        for (Product p : products) {
-            // ✅ 修正：使用正確的庫存計算方法（進貨 - 銷售）
-            Long calculatedStock = productService.getCurrentCalculatedStock(p.getId());
-            int stock = calculatedStock != null ? calculatedStock.intValue() : 0;
-            stockMap.put(p.getId(), stock);
-            
-            List<ProductImage> images = imageRepository.findByProductId(p.getId());
-            if (!images.isEmpty()) {
-                byte[] firstImageData = images.get(0).getImageData(); // 只用第一張
-                String base64 = Base64.getEncoder().encodeToString(firstImageData);
-                imageMap.put(p.getId(), base64);
-            }
-
-        }
-
-        model.addAttribute("products", products);
-        model.addAttribute("stockMap", stockMap);
-        model.addAttribute("imageMap", imageMap);
+        try {
+        	for (Product p : products) {
+        		// ✅ 修正：使用正確的庫存計算方法（進貨 - 銷售）
+        		Long calculatedStock = productService.getCurrentCalculatedStock(p.getId());
+        		int stock = calculatedStock != null ? calculatedStock.intValue() : 0;
+        		stockMap.put(p.getId(), stock);
+        		
+        		List<ProductImage> images = imageRepository.findByProductId(p.getId());
+        		if (!images.isEmpty()) {
+        			byte[] firstImageData = readImg(images.get(0).getImagePath()); // 只用第一張) 
+        			String base64 = Base64.getEncoder().encodeToString(firstImageData);
+        			imageMap.put(p.getId(), base64);
+        		}
+        		
+        	}
+        	
+        	model.addAttribute("products", products);
+        	model.addAttribute("stockMap", stockMap);
+        	model.addAttribute("imageMap", imageMap);
+			
+		} catch (Exception e) {
+			System.out.println(e);
+		}
         return "product/publish";
     }
 
@@ -257,12 +262,6 @@ public class ProductController {
             .header("Content-Type", contentType != null ? contentType : "application/octet-stream")
             .body(imgData);
     }
-    
-    private byte[] readImg(String imgName) throws Exception {
-		String productDir = System.getProperty("user.dir") + "/products";
-		FileInputStream fin = new FileInputStream(new File(productDir + imgName));
-		return fin.readAllBytes();
-	}
     
     @DeleteMapping("/front/images/{id}")
     @ResponseBody
@@ -652,4 +651,11 @@ public class ProductController {
         }
     }
 
+    private byte[] readImg(String imgName) throws Exception {
+		String productDir = System.getProperty("user.dir") + "/products";
+		FileInputStream fin = new FileInputStream(new File(productDir + imgName));
+		byte[] imgData = fin.readAllBytes();
+		fin.close();
+		return imgData;
+	}
 }

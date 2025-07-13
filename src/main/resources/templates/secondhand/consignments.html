@@ -487,28 +487,23 @@
         			
         			$("#deliveryDate").val(data.deliveryDate);
         			
+        			$("#photo1").hide();
+        			$("#photo2").hide();
+        			$("#photo3").hide();
+        			
         			if(data.pic1 != null) {
+        				$("#photo1").attr("src", data.pic1)        				
         				$("#photo1").show();
-		       			$("#photo1").attr("src", "data:image/png; base64, " + data.pic1)        				
-        			}
-        			else {
-        				$("#photo1").hide();
         			}
         			
         			if(data.pic2 != null) {
+						$("#photo2").attr("src", data.pic2)
         				$("#photo2").show();
-						$("#photo2").attr("src", "data:image/png; base64, " + data.pic2)
-        			}
-        			else {
-        				$("#photo2").hide();
         			}
         			
         			if(data.pic3 != null) {
+						$("#photo3").attr("src", data.pic3)
         				$("#photo3").show();
-						$("#photo3").attr("src", "data:image/png; base64, " + data.pic3)
-        			}
-        			else {
-        				$("#photo3").hide();
         			}
         			
         			$("#pCondition").val(data.pCondition);

@@ -272,7 +272,7 @@
 										<tbody>
 											<tr th:each="p : ${products}">
 												<td><img th:if="${imageMap[p.id]} != null"
-													th:src="'data:image/png;base64,' + ${imageMap[p.id]}"
+													th:src="${imageMap[p.id]}"
 													alt="商品圖片" class="img-thumbnail" style="max-width: 60px;">
 												</td>
 												<td th:text="${p.name}" class="fw-semibold text-start"></td>

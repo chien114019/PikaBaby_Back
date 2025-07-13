@@ -43,6 +43,9 @@ public class ProductService {
     
     @Autowired
     private ProductTypeRepository ptRepository;
+    
+    @Autowired
+    private CloudinaryService cloudService;
 
     public List<Product> listAll() {
     	return repository.findByDeletedFalse();
@@ -155,26 +158,18 @@ public class ProductService {
 
         List<ProductImage> imageList = new ArrayList<>();
         
-        try {
-        	String productUrl = System.getProperty("user.dir") + "/products";
-        	File uploadDir = new File(productUrl);
-        	if (!uploadDir.exists()) {
-        		uploadDir.mkdirs();
-        	}
-        	
+        try {        	
         	Integer newId = savedProduct.getId();
-        
+			String folderName = "PikaBaby/Products";
+
         	if (imageFiles != null) {
         		for (MultipartFile file : imageFiles) {
         			if (!file.isEmpty()) {
         				ProductImage img = new ProductImage();
         				img.setProduct(savedProduct);
-//                    img.setImagePath(file.getOriginalFilename());
-        				String imgName = "/p" + newId + "_" +  file.getOriginalFilename();
-        				img.setImagePath(imgName);
-//                    img.setImageData(file.getBytes());
-        				String uploadUrl = productUrl + imgName;
-        				file.transferTo(new File(uploadUrl));
+        				String imgName = "p" + newId + "_" +  file.getOriginalFilename().split("\\.")[0];
+        				String imgPath = cloudService.uploadImg(file, folderName, imgName);
+        				img.setImagePath(imgPath);
         				imageList.add(img);
         			}
         		}

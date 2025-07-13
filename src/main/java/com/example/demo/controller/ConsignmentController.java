@@ -229,9 +229,9 @@ public class ConsignmentController {
 			output.put("customer", consign.getCustomer());
 			output.put("delivery", consign.getDelivery());
 			output.put("deliveryDate", consign.getDeliveryDate());
-			output.put("pic1", readImg(consign.getImg1()));
-			output.put("pic2", readImg(consign.getImg2()));
-			output.put("pic3", readImg(consign.getImg3()));
+			output.put("pic1", consign.getImg1());
+			output.put("pic2", consign.getImg2());
+			output.put("pic3", consign.getImg3());
 			output.put("pCondition", consign.getpCondition());
 			output.put("review", consign.getReview());
 			output.put("price", consign.getPrice());
@@ -240,13 +240,6 @@ public class ConsignmentController {
 			System.out.println(e);
 		}
 		return ResponseEntity.ok(output);
-	}
-
-	private byte[] readImg(String imgName) throws IOException {
-		String targetDir = System.getProperty("user.dir") + "/uploads";
-		FileInputStream fin = new FileInputStream(targetDir + imgName);
-		byte[] img = fin.readAllBytes();
-		return img;
 	}
 
 	@PostMapping("/consign/edit/{id}")

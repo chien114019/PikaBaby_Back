@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -156,9 +157,10 @@ public class ProductController {
         		
         		List<ProductImage> images = imageRepository.findByProductId(p.getId());
         		if (!images.isEmpty()) {
-        			byte[] firstImageData = readImg(images.get(0).getImagePath()); // 只用第一張) 
-        			String base64 = Base64.getEncoder().encodeToString(firstImageData);
-        			imageMap.put(p.getId(), base64);
+//        			byte[] firstImageData = readImg(images.get(0).getImagePath()); // 只用第一張) 
+//        			String base64 = Base64.getEncoder().encodeToString(firstImageData);
+        			String imgUrl = images.get(0).getImagePath();
+        			imageMap.put(p.getId(), imgUrl);
         		}
         		
         	}
@@ -244,23 +246,14 @@ public class ProductController {
     
     @GetMapping("/front/images/{id}")
     @ResponseBody
-    public ResponseEntity<byte[]> serveImage(@PathVariable Integer id) {
+    public ResponseEntity<String> serveImage(@PathVariable Integer id) {
     	ProductImage image = imageRepository.findById(id).orElse(null);
-    	String contentType = URLConnection.guessContentTypeFromName(image.getImagePath());
-    	byte[] imgData = new byte[] {};
-    	
-    	try {
-        	if (image == null || image.getImagePath() == null) {
-        		return ResponseEntity.notFound().build();
-        	}        	
-        	imgData = readImg(image.getImagePath());
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-        return ResponseEntity.ok()
-            .header("Content-Type", contentType != null ? contentType : "application/octet-stream")
-            .body(imgData);
+    	if (image == null || image.getImagePath() == null) {
+    		return ResponseEntity.notFound().build();
+    	}        	
+
+    	String imgUrl = image.getImagePath();
+        return ResponseEntity.ok(imgUrl);
     }
     
     @DeleteMapping("/front/images/{id}")
@@ -344,7 +337,8 @@ public class ProductController {
                     if (imageUrl == null || imageUrl.isBlank()) {
                         // 如果沒有圖片URL，嘗試從product_image表獲取第一張圖片
                         if (p.getImages() != null && !p.getImages().isEmpty()) {
-                            imageUrl = "/products/front/images/" + p.getImages().get(0).getId();
+//                            imageUrl = "/products/front/images/" + p.getImages().get(0).getId();                        	imageUrl = p.getImages().get(0).getImagePath();
+
                         } else {
                             imageUrl = "/images/default.jpg";
                         }

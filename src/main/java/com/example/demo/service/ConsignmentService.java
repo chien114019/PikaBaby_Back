@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,9 @@ public class ConsignmentService {
 
 	@Autowired
 	private CustomerRepository cRepository;
+	
+	@Autowired
+	private CloudinaryService cloudService;
 
 	ProductType pType;
 	Customer cust;
@@ -238,23 +242,20 @@ public class ConsignmentService {
 				}
 
 				Integer newId = repository.save(newConsign).getId();
-
-				String saveDir = System.getProperty("user.dir") + "/uploads";
-				File dir = new File(saveDir);
-				if (!dir.exists()) {
-					dir.mkdirs();
-				}
-
-				List<String> imgNames = new ArrayList<String>();
+				
+				List<String> imgUrls = new ArrayList<String>();
+				String folderName = "PikaBaby/Uploads";
 				for (MultipartFile item : files) {
-					String imgName = "/c" + newId + "_" + item.getOriginalFilename();
-					String uploadUrl = saveDir + imgName;
-					item.transferTo(new File(uploadUrl));
-					imgNames.add(imgName);
+					System.out.println("fileName:" + item.getOriginalFilename().split("\\."));
+					String fileName = "c" + newId + "_" + item.getOriginalFilename().split("\\.")[0];
+					String imgUrl = cloudService.uploadImg(item, folderName, fileName);
+					System.out.println("imgurl:" + imgUrl);
+					imgUrls.add(imgUrl);
 				}
-				newConsign.setImg1(imgNames.get(0));
-				newConsign.setImg2(imgNames.get(1));
-				newConsign.setImg3(imgNames.get(2));
+				
+				newConsign.setImg1(imgUrls.get(0));
+				newConsign.setImg2(imgUrls.get(1));
+				newConsign.setImg3(imgUrls.get(2));
 
 				repository.save(newConsign);
 

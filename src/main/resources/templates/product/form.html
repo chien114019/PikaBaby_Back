@@ -252,7 +252,7 @@
 								<div class="d-flex flex-wrap">
 									<div th:each="img : ${product.images}"
 										class="position-relative me-3 mb-3">
-										<img th:src="@{'/products/front/images/' + ${img.id}}"
+										<img th:src="${img.ImagePath}"
 											class="img-thumbnail"
 											style="max-width: 150px; max-height: 150px;" />
 

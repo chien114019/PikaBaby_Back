@@ -219,7 +219,8 @@ public class Product {
     public String getPrimaryImageUrl() {
         // 優先返回 images 集合中的第一張圖片
         if (images != null && !images.isEmpty()) {
-            return "/products/front/images/" + images.get(0).getId();
+//            return "/products/front/images/" + images.get(0).getId();
+        	return images.get(0).getImagePath();
         }
         // 其次返回 imageUrl 欄位
         if (imageUrl != null && !imageUrl.trim().isEmpty()) {

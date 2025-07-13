@@ -17,7 +17,7 @@ public class EcpayController {
         return "ecpay-test";
     }
 
-    @PostMapping("/ecpay/checkout")
+    @PostMapping("/ecpay/front/checkout")
     public void goEcpayPayment(@RequestParam("amount") String amount,
                                @RequestParam("item") String item,
                                HttpServletResponse response) throws IOException {
@@ -67,7 +67,7 @@ public class EcpayController {
         response.getWriter().write(html.toString());
     }
 
-    @PostMapping("/ecpay/callback")
+    @PostMapping("/ecpay/front/callback")
     @ResponseBody
     public String ecpayCallback(@RequestParam Map<String, String> params) {
         System.out.println("🔔 ECPay 回傳參數：");

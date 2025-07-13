@@ -33,7 +33,7 @@ public class LinePayController {
 
 	private Map<String, String> payStatus = new ConcurrentHashMap<>();
 
-	@PostMapping("/request")
+	@PostMapping("/front/request")
 	public ResponseEntity<Response> PayRequest(@RequestBody CheckoutPaymentRequestForm form) {
 		try {
 			System.out.println("PayRequest()");
@@ -50,7 +50,7 @@ public class LinePayController {
 		}
 	}
 
-	@GetMapping("/confirm")
+	@GetMapping("/front/confirm")
 	public void PayConfirm(@RequestParam String transactionId, @RequestParam String orderId, HttpServletResponse res) {
 		try {
 			System.out.println("PayConfirm()");
@@ -77,7 +77,7 @@ public class LinePayController {
 		}
 	}
 
-	@GetMapping("/checkStatus")
+	@GetMapping("/front/checkStatus")
 	public ResponseEntity<Response> getPayStatus(@RequestParam String orderId) {
 		Response response = new Response();
 		String status = payStatus.get(orderId);

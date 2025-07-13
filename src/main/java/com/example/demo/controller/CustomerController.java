@@ -252,7 +252,7 @@ public class CustomerController {
 //    ============= 前台API =================
 //    根據id取得顧客資料
 	@ResponseBody
-	@GetMapping("/info/{id}")
+	@GetMapping("/front/info/{id}")
 	public ResponseEntity<Map<String, Object>> getCustomerInfo(@PathVariable String id) {
 		Customer cust = service.getById((int) Long.parseLong(id));
 		Response response = new Response();
@@ -515,7 +515,7 @@ public class CustomerController {
 	}
 
 	// 檢查會員登入狀態 API
-	@GetMapping("/check-login")
+	@GetMapping("/front/check-login")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> checkLoginStatus(HttpSession session) {
 		Object customerId = session.getAttribute("customerId");
@@ -533,14 +533,14 @@ public class CustomerController {
 	}
 
 	// 取得會員資料 API (別名)
-	@GetMapping("/profile")
+	@GetMapping("/front/profile")
 	@ResponseBody
 	public ResponseEntity<?> getMemberProfile(HttpSession session, HttpServletRequest request) {
 		return getCurrentMember(session, request);
 	}
 
 	// 取得會員點數 API
-	@GetMapping("/points")
+	@GetMapping("/front/points")
 	@ResponseBody
 	public ResponseEntity<Map<String, Object>> getMemberPoints(HttpSession session) {
 		Object idObj = session.getAttribute("customerId");

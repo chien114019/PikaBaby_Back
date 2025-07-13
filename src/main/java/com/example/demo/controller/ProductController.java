@@ -422,7 +422,8 @@ public class ProductController {
             String imageUrl = product.getImageUrl();
             if (imageUrl == null || imageUrl.isBlank()) {
                 if (product.getImages() != null && !product.getImages().isEmpty()) {
-                    imageUrl = "/products/front/images/" + product.getImages().get(0).getId();
+//                    imageUrl = "/products/front/images/" + product.getImages().get(0).getId();
+                	imageUrl = product.getImages().get(0).getImagePath();
                 } else {
                     imageUrl = "/images/default.jpg";
                 }
@@ -439,7 +440,8 @@ public class ProductController {
             List<String> allImageUrls = new ArrayList<>();
             if (product.getImages() != null && !product.getImages().isEmpty()) {
                 for (ProductImage img : product.getImages()) {
-                    allImageUrls.add("/products/front/images/" + img.getId());
+//                    allImageUrls.add("/products/front/images/" + img.getId());
+                	allImageUrls.add(img.getImagePath());
                 }
             }
             if (allImageUrls.isEmpty()) {
@@ -608,7 +610,7 @@ public class ProductController {
     }
     
     // 檢查商品狀態API（除錯用）
-    @GetMapping("/api/stock/{id}")
+    @GetMapping("/front/api/stock/{id}")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> getProductStock(@PathVariable Integer id) {
         try {
@@ -632,7 +634,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/api/status/{id}")
+    @GetMapping("/front/api/status/{id}")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> getProductStatus(@PathVariable Integer id) {
         try {

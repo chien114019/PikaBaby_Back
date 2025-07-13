@@ -55,16 +55,17 @@ public class SecurityConfig {
         	.and()
 
         	.csrf().disable()
-        	.authorizeHttpRequests(auth -> auth
-        	    .anyRequest().permitAll() //完全放行
-        	    )
+//        	.authorizeHttpRequests(auth -> auth
+//        	    .anyRequest().permitAll() //完全放行
+//        	    )
         
-//            .authorizeHttpRequests(auth -> auth
-//                .requestMatchers("/login", "/css/**", "/js/**", "/logo-pikababy.png").permitAll() // 登入畫面、靜態資源不需驗證
-//                .requestMatchers("/secondhand/front/**", "/orders/front/**").permitAll() // 登入畫面、靜態資源不需驗證
-//                .requestMatchers("/employee/**").hasAnyRole("ADMIN", "ROOT") // 僅 ADMIN、ROOT 可用/employee 開頭的網址
-//                .anyRequest().authenticated() // 其他都要登入後才可看
-//            )
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/login", "/css/**", "/js/**", "/logo-pikababy.png").permitAll() // 登入畫面、靜態資源不需驗證
+                .requestMatchers("/secondhand/front/**", "/orders/front/**", "/products/front/**", "/ecpay/front/**",
+                		"/linepay/front/**", "/customers/front/**").permitAll() // 登入畫面、靜態資源不需驗證
+                .requestMatchers("/employee/**").hasAnyRole("ADMIN", "ROOT") // 僅 ADMIN、ROOT 可用/employee 開頭的網址
+                .anyRequest().authenticated() // 其他都要登入後才可看
+            )
             
         
        

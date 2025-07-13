@@ -158,7 +158,7 @@ public class SalesOrderController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/api/{id:\\\\d+}")
+    @GetMapping("/front/api/{id:\\\\d+}")
     @ResponseBody
     public ResponseEntity<?> getOrderApi(@PathVariable String id) {
         try {
@@ -175,7 +175,7 @@ public class SalesOrderController {
     }
     
     // 新增：根據訂單ID查詢單一訂單詳情
-    @GetMapping("/api/order/{orderId}")
+    @GetMapping("/front/api/order/{orderId}")
     @ResponseBody
     public ResponseEntity<?> getOrderById(@PathVariable Integer orderId) {
         try {
@@ -255,7 +255,7 @@ public class SalesOrderController {
  
     
     // 購物車提交訂單API（重構版 - 只負責HTTP層處理）
-    @PostMapping(value = "/api/cart", produces = "application/json")
+    @PostMapping(value = "/front/api/cart", produces = "application/json")
     @ResponseBody
     public ResponseEntity<?> submitCartOrder(@RequestBody Map<String, Object> orderData) {
         try {
@@ -294,7 +294,7 @@ public class SalesOrderController {
     }
 
     // 獲取會員點數API（重構版 - 只負責HTTP層處理）
-    @GetMapping("/api/member/points/{customerId}")
+    @GetMapping("/front/api/member/points/{customerId}")
     @ResponseBody
     public ResponseEntity<?> getMemberPoints(@PathVariable Integer customerId) {
         try {
@@ -322,7 +322,7 @@ public class SalesOrderController {
     }
     
     // 根據會員名稱或email獲取點數API（重構版 - 只負責HTTP層處理）
-    @GetMapping("/api/member/points/search")
+    @GetMapping("/front/api/member/points/search")
     @ResponseBody
     public ResponseEntity<?> getMemberPointsByNameOrEmail(@RequestParam(required = false) String name, 
                                                           @RequestParam(required = false) String email) {
@@ -355,7 +355,7 @@ public class SalesOrderController {
     }
     
     // 除錯API：檢查商品庫存
-    @GetMapping("/api/debug/stock/{productId}")
+    @GetMapping("/front/api/debug/stock/{productId}")
     @ResponseBody
     public ResponseEntity<?> debugProductStock(@PathVariable Integer productId) {
         try {

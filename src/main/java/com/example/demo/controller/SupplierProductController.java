@@ -7,6 +7,7 @@ import com.example.demo.service.ProductService;
 import com.example.demo.service.SupplierService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -30,8 +31,15 @@ public class SupplierProductController {
     private SupplierProductRepository supplierProductRepository;
 
     @GetMapping
-    public String list(Model model) {
-        List<SupplierProduct> list = supplierProductRepository.findAllValid();
+    public String list(@RequestParam(required = false) String keyword, Model model) {
+    	List<SupplierProduct> list;
+    	if (!(keyword == null)&& !keyword.isEmpty()) {
+			list = supplierProductRepository.searchProductName("%" + keyword + "%");
+		} else {
+			list = supplierProductRepository.findAllValid();
+		}
+    	
+    	model.addAttribute("keyword", keyword);
         model.addAttribute("supplierProducts", list);
         return "supplier-product/list";  // 必須建立這個 HTML
     }

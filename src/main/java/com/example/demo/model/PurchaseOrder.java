@@ -88,7 +88,6 @@ public class PurchaseOrder {
 		this.orderNumber = orderNumber;
 	}
 	
-
 	@Transient
 	public String getFormattedTotalAmount() {
 	    BigDecimal total = getTotalAmount();

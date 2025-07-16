@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.model.AccountsPayable;
 import com.example.demo.model.PurchaseOrder;
+import com.example.demo.model.Supplier;
 import com.example.demo.repository.AccountsPayableRepository;
 import com.example.demo.repository.PurchaseOrderRepository;
 
@@ -87,6 +88,10 @@ public class PurchaseOrderService {
     
     public PurchaseOrder getById(Integer id) {
         return purchaseOrderRepo.findById(id).orElse(null);
+    }
+    
+    public List<PurchaseOrder> searchBySupplierName(String keyword) {
+        return purchaseOrderRepo.findBySupplierName("%" + keyword + "%");
     }
 
 }

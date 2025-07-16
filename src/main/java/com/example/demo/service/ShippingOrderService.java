@@ -37,6 +37,10 @@ public class ShippingOrderService {
     public ShippingOrder findById(Integer id) {
         return shippingOrderRepository.findById(id).orElse(null);
     }
+    
+    public List<ShippingOrder> searchCustomerName(String keyword) {
+		return shippingOrderRepository.searchCustomerName("%" + keyword + "%");
+	}
 
     /**
      * 建立出貨單

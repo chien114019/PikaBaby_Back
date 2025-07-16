@@ -35,8 +35,16 @@ public class ShippingOrderController {
     // ========== 後台畫面 ==========
 
     @GetMapping
-    public String listAllShippingOrders(Model model) {
-        List<ShippingOrder> shippingOrders = shippingOrderService.findAll();
+    public String listAllShippingOrders(@RequestParam(required = false) String keyword, Model model) {
+    	List<ShippingOrder> shippingOrders;
+    	
+    	if (!(keyword == null) && !keyword.isEmpty()) {
+			shippingOrders = shippingOrderService.searchCustomerName(keyword);
+		} else {
+			shippingOrders = shippingOrderService.findAll();
+		}
+    	
+    	model.addAttribute("keyword", keyword);
         model.addAttribute("shippingOrders", shippingOrders);
         return "shipping/list";
     }

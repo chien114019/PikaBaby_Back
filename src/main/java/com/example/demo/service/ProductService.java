@@ -93,8 +93,8 @@ public class ProductService {
         return repository.findByDeletedFalse();
     }
 
-    public List<Product> searchByName(String keyword) {
-        return repository.searchAvailable(keyword);
+    public List<Product> searchByName(String keyword, Boolean deleted) {
+        return repository.searchAvailable(keyword, deleted);
     }
 
     // 前台電商用：快速庫存查詢

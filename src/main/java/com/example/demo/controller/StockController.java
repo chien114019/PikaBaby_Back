@@ -24,7 +24,7 @@ public class StockController {
         List<Product> products;
 
         if (keyword != null && !keyword.isBlank()) {
-            products = productService.searchByName(keyword);
+            products = productService.searchByName(keyword, false);
         } else {
             products = productService.getAllProducts();
         }

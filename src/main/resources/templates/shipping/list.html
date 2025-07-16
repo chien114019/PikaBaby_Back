@@ -222,13 +222,13 @@
 					<!-- 從此往下寫右側區域功能 -->
 					<h2 class="fw-bold">出貨單列表</h2>
 					
-					<form method="get" action="/products" class="mb-3">
+					<form method="get" action="/shipping" class="mb-3">
 						<div class="d-flex align-items-end flex-wrap gap-3">
 						<!-- 左側搜尋 -->
 						<div>
 								<label for="keyword" class="form-label"></label> <input
 									type="text" class="form-control" id="keyword" name="keyword"
-									th:value="${param.keyword}" placeholder="請輸入關鍵字">
+									th:value="${keyword}" placeholder="請輸入客戶名字">
 							</div>
 
 							<div class="pt-2">

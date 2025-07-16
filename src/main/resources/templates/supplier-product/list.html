@@ -223,35 +223,37 @@
 					<!-- 從此往下寫右側區域功能 -->
 					<h2>供應商報價清單</h2>
 
-					<form  class="mb-3 text-end">
-					<div class="d-flex align-items-end flex-wrap gap-3">
-					<!-- 左側搜尋 -->
+					<form class="mb-3 text-end" action="/supplier-products"
+						method="get">
+						<div class="d-flex align-items-end flex-wrap gap-3">
+							<!-- 左側搜尋 -->
 							<div>
 								<!-- <label for="keyword" class="form-label">商品關鍵字</label>  -->
 								<input type="text" class="form-control" id="keyword"
-									name="keyword" th:value="${param.keyword}"
-									placeholder="請輸入商品名稱">
+									name="keyword" th:value="${keyword}" placeholder="請輸入商品名稱">
 							</div>
-							
+
 							<div class="pt-2">
 								<button type="submit" class="btn btn-outline-primary">
 									<i class="bi bi-search"></i> 查詢
 								</button>
 							</div>
-					<!-- 右側新增按鈕 -->
-					<div class="ms-auto pt-2">
-						<a class="btn btn-outline-primary"
-							th:href="@{/supplier-products/new}"><i class="bi bi-plus-circle me-1"></i>新增供應商報價</a>
+							<!-- 右側新增按鈕 -->
+							<div class="ms-auto pt-2">
+								<a class="btn btn-outline-primary"
+									th:href="@{/supplier-products/new}"><i
+									class="bi bi-plus-circle me-1"></i>新增供應商報價</a>
 							</div>
-							
-							</div>
+
+						</div>
 					</form>
-					
+
 					<table id="purchaseTable" class="table table-bordered align-middle">
 						<thead class="text-center table-light">
 							<tr>
 								<th class="d-none">報價ID</th>
-								<th id="dateHeader" style="cursor:pointer">日期<span id="dateSortIcon" class="ms-3">▼</span></th>
+								<th id="dateHeader" style="cursor: pointer">日期<span
+									id="dateSortIcon" class="ms-3">▼</span></th>
 								<th>商品名稱</th>
 								<th>廠商名稱</th>
 								<th>價格</th>
@@ -260,21 +262,24 @@
 						</thead>
 						<tbody>
 							<tr th:each="sp : ${supplierProducts}">
-								<td th:text="${sp.id}" class="text-center d-none"></td> 
-								<td th:attr="data-date=${sp.createdDate != null ? #dates.format(sp.createdDate, 'yyyy-MM-dd') : ''}"
-								    th:text="${sp.createdDate != null ? #dates.format(sp.createdDate, 'yyyy-MM-dd') : '無建立日期'}"
-								    class="text-center"></td>
-								<td th:text="${sp.product != null ? sp.product.name : '無商品'}" class="ps-5"></td>
-								<td th:text="${sp.supplier != null ? sp.supplier.name : '無供應商'}" class="text-center"></td>					
+								<td th:text="${sp.id}" class="text-center d-none"></td>
+								<td
+									th:attr="data-date=${sp.createdDate != null ? #dates.format(sp.createdDate, 'yyyy-MM-dd') : ''}"
+									th:text="${sp.createdDate != null ? #dates.format(sp.createdDate, 'yyyy-MM-dd') : '無建立日期'}"
+									class="text-center"></td>
+								<td th:text="${sp.product != null ? sp.product.name : '無商品'}"
+									class="ps-5"></td>
+								<td th:text="${sp.supplier != null ? sp.supplier.name : '無供應商'}"
+									class="text-center"></td>
 								<td th:text="${sp.formattedPrice}" class="text-center"></td>
 
 
-								<td class="text-center" >
-								<!-- <a th:href="@{'/supplier-products/edit/' + ${sp.id}}"
-									class="btn btn-warning btn-sm me-1">編輯</a>  -->
-									<a
+								<td class="text-center">
+									<!-- <a th:href="@{'/supplier-products/edit/' + ${sp.id}}"
+									class="btn btn-warning btn-sm me-1">編輯</a>  --> <a
 									th:href="@{'/supplier-products/delete/' + ${sp.id}}"
-									class="btn btn-danger btn-sm">刪除</a></td>
+									class="btn btn-danger btn-sm">刪除</a>
+								</td>
 							</tr>
 						</tbody>
 					</table>

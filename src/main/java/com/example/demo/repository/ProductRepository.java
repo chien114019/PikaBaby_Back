@@ -26,12 +26,13 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 	List<Product> searchAvailable(@Param("keyword") String keyword, @Param("deleted") Boolean deleted);
 
 	
-//	List<Product> findAllByPublishedAndAge1(Boolean published, Boolean age1);
-//
-//	List<Product> findAllByPublishedAndAge2(Boolean published, Boolean age1);
-//
-//	List<Product> findAllByPublishedAndAge3(Boolean published, Boolean age1);
-//
-//	List<Product> findAllByPublishedAndAge4(Boolean published, Boolean age1);
+	List<Product> findAllByPublishedTrueAndAge1True();
 
+	List<Product> findAllByPublishedTrueAndAge2True();
+
+	List<Product> findAllByPublishedTrueAndAge3True();
+
+	List<Product> findAllByPublishedTrueAndAge4True();
+
+	List<Product> findAllByPublishedTrueAndAge5True();
 }

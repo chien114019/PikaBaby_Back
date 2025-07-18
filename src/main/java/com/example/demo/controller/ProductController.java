@@ -72,7 +72,7 @@ public class ProductController {
 		List<Product> products;
 
 		if (keyword != null && !keyword.isEmpty()) {
-				products = productService.searchByName(keyword, showDeleted != null); // 包含 deleted = true
+			products = productService.searchByName(keyword, showDeleted != null); // 包含 deleted = true
 		} else {
 			if (Boolean.TRUE.equals(showDeleted)) {
 				products = productService.findAll(); // 包含 deleted = true
@@ -80,7 +80,6 @@ public class ProductController {
 				products = productService.findActive(); // 只取 deleted = false
 			}
 		}
-
 
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("products", products);
@@ -102,6 +101,7 @@ public class ProductController {
 	@PostMapping("/save")
 	public String save(@ModelAttribute Product product, @RequestParam("type") Integer type,
 			@RequestParam("imageFiles") MultipartFile[] imageFiles) throws IOException {
+		System.out.println(product.getAge2());
 		productService.save(product, imageFiles, type); // 呼叫 Service 處理商品+圖片儲存
 		productRepository.save(product);
 		return "redirect:/products";
@@ -314,9 +314,31 @@ public class ProductController {
 
 	@GetMapping("/front/published")
 	@ResponseBody
-	public List<Map<String, Object>> getPublishedProducts() {
+	public List<Map<String, Object>> getPublishedProducts(@RequestParam Integer age) {
 		try {
-			List<Product> publishedProducts = productRepository.findByPublishedTrue();
+//			List<Product> publishedProducts = productRepository.findByPublishedTrue();
+			List<Product> publishedProducts;
+			switch (age) {
+			case 1:
+				publishedProducts = productRepository.findAllByPublishedTrueAndAge1True();
+				break;
+			case 2:
+				publishedProducts = productRepository.findAllByPublishedTrueAndAge2True();
+				break;
+			case 3:
+				publishedProducts = productRepository.findAllByPublishedTrueAndAge3True();
+				break;
+			case 4:
+				publishedProducts = productRepository.findAllByPublishedTrueAndAge4True();
+				break;
+			case 5:
+				publishedProducts = productRepository.findAllByPublishedTrueAndAge5True();
+				break;
+
+			default:
+				publishedProducts = productRepository.findByPublishedTrue();
+				break;
+			}
 
 			List<Map<String, Object>> result = publishedProducts.stream().filter(p -> {
 				// 先計算庫存，只顯示庫存大於0的商品

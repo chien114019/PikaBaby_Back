@@ -47,7 +47,10 @@ public class Product {
     private Boolean age3 = false;	// 6-12M
     
     @Column(name = "age4")
-    private Boolean age4 = false;	// 2-3Y
+    private Boolean age4 = false;	// 1-2Y
+    
+    @Column(name = "age5")
+    private Boolean age5 = false;	// 2-3Y
     
     // 關聯表（如果存在的話）
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
@@ -171,7 +174,15 @@ public class Product {
         this.age4 = age4;
     }
 
-    public List<SupplierProduct> getSupplierProducts() {
+    public Boolean getAge5() {
+		return age5;
+	}
+
+	public void setAge5(Boolean age5) {
+		this.age5 = age5;
+	}
+
+	public List<SupplierProduct> getSupplierProducts() {
         return supplierProducts;
     }
 

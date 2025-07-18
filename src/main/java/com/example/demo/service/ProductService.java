@@ -173,9 +173,9 @@ public class ProductService {
         				imageList.add(img);
         			}
         		}
+        		imageRepository.saveAll(imageList);			
         	}
         	
-        	imageRepository.saveAll(imageList);			
 		} catch (Exception e) {
 			System.out.println(e);
 		}

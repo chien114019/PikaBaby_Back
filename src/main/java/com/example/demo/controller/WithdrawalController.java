@@ -28,7 +28,6 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@CrossOrigin(originPatterns = "*", allowCredentials = "true")
 @Controller
 @RequestMapping("/secondhand")
 public class WithdrawalController {

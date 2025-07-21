@@ -45,7 +45,6 @@ import com.example.demo.util.SendMailUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
-@CrossOrigin(origins = "http://localhost:5501", allowCredentials = "true")
 @Controller
 @RequestMapping("/customers") // 所有路徑都會以 /customers 開頭
 public class CustomerController {

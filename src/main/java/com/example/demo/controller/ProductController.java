@@ -39,8 +39,6 @@ import com.example.demo.service.ProductService;
 import com.example.demo.service.SupplierProductService;
 import com.example.demo.service.SupplierService;
 
-@CrossOrigin(origins = { "http://localhost:5500", "http://127.0.0.1:5500", "http://localhost:5501",
-		"http://127.0.0.1:5501", "http://localhost:5503", "http://127.0.0.1:5503" }, allowCredentials = "true")
 @Controller
 @RequestMapping("/products")
 public class ProductController {

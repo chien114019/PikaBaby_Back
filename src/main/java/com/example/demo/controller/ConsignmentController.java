@@ -31,7 +31,6 @@ import com.example.demo.service.ConsignmentService;
 
 import jakarta.servlet.http.HttpSession;
 
-@CrossOrigin(origins = "http://localhost:5501", allowCredentials = "true")
 @Controller
 @RequestMapping("/secondhand")
 public class ConsignmentController {

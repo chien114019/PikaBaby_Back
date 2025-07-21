@@ -270,8 +270,8 @@
 									</div>
 									<div class="mb-3 w-50 d-flex flex-column" style="height: 319px">
 										<label for="pCondition" class="col-form-label">商品概況：</label>
-										<textarea class="form-control h-100" id="pCondition" wrap="soft"
-											readonly></textarea>
+										<textarea class="form-control h-100" id="pCondition"
+											wrap="soft" readonly></textarea>
 									</div>
 								</div>
 							</div>
@@ -336,18 +336,16 @@
 											aria-label="Default select example" name="type">
 											<option value="" th:selected="${type == ''}">全部</option>
 											<option value="1" th:selected="${type == '1'}">嬰兒服裝</option>
-											<option value="2" th:selected="${type == '2'}">嬰兒推車</option>
 											<option value="3" th:selected="${type == '3'}">嬰兒床</option>
-											<option value="4" th:selected="${type == '4'}">嬰兒用品</option>
 											<option value="5" th:selected="${type == '5'}">玩具</option>
-											<option value="6" th:selected="${type == '6'}">汽座</option>
+											<option value="6" th:selected="${type == '6'}">汽座/座椅</option>
 											<option value="7" th:selected="${type == '7'}">學步用品</option>
 											<option value="8" th:selected="${type == '8'}">幼兒服裝</option>
 											<option value="9" th:selected="${type == '9'}">幼教用品</option>
 											<option value="10" th:selected="${type == '10'}">兒童服裝</option>
-											<option value="11" th:selected="${type == '11'}">兒童推車</option>
 											<option value="12" th:selected="${type == '12'}">餐椅</option>
 											<option value="13" th:selected="${type == '13'}">電器用品</option>
+											<option value="19" th:selected="${type == '19'}">嬰幼兒推車</option>
 										</select>
 									</div>
 								</div>
@@ -392,10 +390,12 @@
 
 					<!-- 商品表格 -->
 					<div class="table-responsive">
-						<table id="purchaseTable" class="table table-bordered align-middle text-center">
+						<table id="purchaseTable"
+							class="table table-bordered align-middle text-center">
 							<thead class="table-light">
 								<tr>
-								    <th id="dateHeader" style="cursor:pointer">申請日期<span id="dateSortIcon" class="ms-2">▼</span></th>
+									<th id="dateHeader" style="cursor: pointer">申請日期<span
+										id="dateSortIcon" class="ms-2">▼</span></th>
 									<th class="d-none">編號</th>
 									<th>商品名稱</th>
 									<th>商品類別</th>
@@ -408,16 +408,16 @@
 							</thead>
 							<tbody>
 								<tr th:each="c: ${consignments}">
-								    <td th:text="${c.applyDate}"></td>
+									<td th:text="${c.applyDate}"></td>
 									<td th:text="${c.id}" class="d-none"></td>
 									<td th:text="${c.productName}"></td>
 									<td th:text="${c.productType.typeName}"></td>
 									<td th:text="${c.quantity}"></td>
-									<td th:switch="${c.delivery}"><span
-										th:case="${0}" th:text="已收貨"></span> <span th:case="${1}"
-										th:text="到府取貨"></span> <span th:case="${2}" th:text="親自交付"></span>
-										<span th:case="${3}" th:text="物流宅配"></span> <span
-										th:case="${4}" th:text="超商寄件"></span></td>
+									<td th:switch="${c.delivery}"><span th:case="${0}"
+										th:text="已收貨"></span> <span th:case="${1}" th:text="到府取貨"></span>
+										<span th:case="${2}" th:text="親自交付"></span> <span
+										th:case="${3}" th:text="物流宅配"></span> <span th:case="${4}"
+										th:text="超商寄件"></span></td>
 									<td th:switch="${c.review}"><span th:case="${0}"
 										th:text="審核中"></span> <span th:case="${1}" th:text="通過"></span>
 										<span th:case="${2}" th:text="未通過"></span></td>
